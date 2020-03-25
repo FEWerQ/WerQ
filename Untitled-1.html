@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">  
+    <title>Rock Paper Scissor Lizard Spock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen">
+    <script charset="utf-8"></script>
+    <script>
+        window.onload=function(){
+        
+        var pelaajaPoints = 0;
+        var hal9000Points = 0;
+        const pelaajaPoints_span = document.getElementById("pelaaja-points");
+        const hal9000Points_span = document.getElementById("hal9000-points");
+        const pistetaulu_div = document.querySelector(".pistetaulu");
+        const tulos_div = document.querySelector(".tulos");
+        const rock_div = document.getElementById("r");
+        const paper_div = document.getElementById("p");
+        const scissor_div = document.getElementById("s");
+        const lizard_div = document.getElementById("l");
+        const spock_div = document.getElementById("v");
+        
+        /*  v = vulcan = spock */
+        
+        tulos_div.innerHTML = "'I am putting myself to the fullest possible use'<br> -HAL9000";
+        function gethal9000Valinta() {
+            const valinnat = ['r', 'p', 's', 'l', 'v'];
+            const randomNumber = Math.floor(Math.random() * 5);
+            return valinnat[randomNumber];
+        }
+        function muutaSanaksi(kirjain){
+            if (kirjain === "r") return "Kivi";
+            if (kirjain === "p") return "Paperi";
+            if (kirjain === "s") return "Sakset";
+            if (kirjain === "l") return "Lisko";
+            return "Spock";
+        }
+        function win(pelaajaValinta, hal9000Valinta) {
+            pelaajaPoints++;
+            pelaajaPoints_span.innerHTML = pelaajaPoints;    
+            tulos_div.innerHTML = muutaSanaksi(pelaajaValinta) + " voittaa " + muutaSanaksi(hal9000Valinta) + ". olet voittaja.";    
+        }
+        
+        function lose(pelaajaValinta, hal9000Valinta) {
+            hal9000Points++;
+            hal9000Points_span.innerHTML = hal9000Points;
+            tulos_div.innerHTML = muutaSanaksi(hal9000Valinta) + " voittaa " + muutaSanaksi(pelaajaValinta) + ". olet häviäjä.";
+        
+        }
+        
+        function draw(pelaajaValinta, hal9000Valinta) {
+            tulos_div.innerHTML = muutaSanaksi(pelaajaValinta) + " on sama kuin " + muutaSanaksi(hal9000Valinta) + ", tasapeli.";
+        
+        }
+        
+        function game(pelaajaValinta) {
+            const hal9000Valinta = gethal9000Valinta();
+            switch (pelaajaValinta + hal9000Valinta) {
+                case "rs": 
+                case "rl":
+                case "pr":
+                case "pv":
+                case "sp":
+                case "sl":
+                case "lv":
+                case "lp":
+                case "vs":
+                case "vr":
+                    win(pelaajaValinta, hal9000Valinta);
+                    break;
+                case "rp":
+                case "rv":
+                case "ps":
+                case "pl":
+                case "sv":
+                case "sr":
+                case "lr":
+                case "ls":
+                case "vl":
+                case "vp":
+                    lose(pelaajaValinta, hal9000Valinta);
+                    break;
+                case "rr":
+                case "pp":
+                case "ss":
+                case "ll":
+                case "vv":        
+                    draw(pelaajaValinta, hal9000Valinta);
+            }
+        }
+        function main(){
+            rock_div.addEventListener('click', function () {
+                game("r");
+            })
+            paper_div.addEventListener('click', function () {
+                game ("p");
+            })
+            scissor_div.addEventListener('click', function () {
+                game ("s");
+            })
+            lizard_div.addEventListener('click', function () {
+                game ("l");
+            })
+            spock_div.addEventListener('click', function () {
+                game ("v");
+            })
+        }
+        
+        main();
+        }
+        </script>
+
+<!-- CSS -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
+
+* { 
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+    --main-width: 95%;
+	--main-max-width: 100%;  
+	
+}
+
+body {
+	margin: 0 auto;
+	width: var(--main-width);
+	max-width: var(--main-max-width);
+	max-height: 95vh;	
+	min-width: 50vh;
+	min-height: auto;
+	color: white;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-family: 'Space Mono', monospace;	
+ 	background-image: url("https://i.imgur.com/vLMPeLS.png"); 
+	background-color: rgb(168, 167, 167);	
+	background-repeat:no-repeat;
+	background-position: top center;
+	background-blend-mode: darken;	
+ }
+
+.header { grid-area: header;}
+.pistetaulu { grid-area: score;}
+.tulos {grid-area: tulos;}
+.game { grid-area: game;}
+.footer { grid-area: footer;}
+
+.grid {
+	display: grid;		
+	grid-template-areas: "header header header"
+						 "score score score"
+						 "tulos tulos tulos"
+						 "game game game"
+						 "footer footer footer";
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: auto 
+						auto
+						auto
+						auto
+						auto;	
+		
+}
+
+/*  OTSIKKO  */
+
+.header {
+	margin: auto;	
+	font-size: 40px;
+	font-weight: bolder;
+}
+
+/*  PISTETAULU  */
+
+.pistetaulu {
+	margin: 10px auto;
+	border: 3px solid white;	
+	width: 50vh;
+	height: 100px;
+	font-size: 40px;
+	border-radius: 5px;	
+	position: relative;
+	padding-top: 10px;
+	background-color: rgba(3, 0, 12, 0.7); 
+	width: 40vh;
+}
+
+.points {
+	background: rgba(228, 35, 35, 0.856);
+	font-size: 30px;
+	padding: 2px 2px;
+	vertical-align: middle;
+}
+
+#pelaaja-tag {
+	position: absolute;
+	top: 30%;
+	left: -10%;
+}
+
+#hal9000-tag {	
+	position: absolute;
+	top: 30%;
+	right: -10%;	
+}
+
+.tulos {
+	font-size: 20px;
+	font-weight: bold;	
+	width: auto;
+	height: 60px;
+	justify-self: center;	
+	background-color: rgba(3, 0, 12, 0.7);
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#pelaaja-points {
+	font-size: 45px;
+	font-weight: bold;
+	
+}
+
+#hal9000-points {
+	font-size: 45px;
+	font-weight: bold;
+}
+
+
+
+/*  PELI  */
+
+.game {	
+	flex-wrap: wrap;
+}
+
+.valikko {	
+	padding: 10px 10px;
+}
+
+.valinta {
+	display: inline-block;	
+	transition: all 0.1s ease;
+	
+}
+
+.valinta:hover {
+	cursor: pointer;
+	filter: contrast(175%)
+}
+
+.valinta > img {
+	min-width: 100px;
+	width: auto;
+	max-width: 15vh;
+	
+}
+
+#sitaatti {	
+	font-style: italic;
+
+}
+.footer {
+	margin: auto auto;
+	border: 3px solid white;	
+	width: 40vh;
+	height: auto;	
+	border-radius: 5px;	
+	position: relative;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	background-color: rgba(3, 0, 12, 0.7); 
+}
+    </style>
+</head>
+
+<!-- HTML -->
+
+    <body class="grid">    
+        
+
+<!-- PISTETAULU -->     
+
+<div class="pistetaulu">
+        <div id="pelaaja-tag" class="points">Pelaaja</div>
+        <div id="hal9000-tag" class="points">HAL9000</div>
+        <span id="pelaaja-points">0</span> :
+        <span id="hal9000-points">0</span>
+    </div></div>       
+
+<div class="tulos">
+       <!--            
+          RPS.js
+       -->  
+</div>         
+
+
+<!-- ITSE PELI -->  
+
+<div class="game">
+    <p id="tulosteksti"></p>
+  <div class="valikko">
+
+    <div class="valinta" id="r">
+      <img src="https://i.imgur.com/76reJ3v.png" alt="rock">
+    </div>
+
+    <div class="valinta" id="p">
+        <img src="https://i.imgur.com/aGIAQxE.png" alt="paper">
+    </div>
+
+    <div class="valinta" id="s">
+          <img src="https://i.imgur.com/m1en02s.png" alt="scissor">
+    </div>
+<br>
+    <div class="valinta" id="l">
+        <img src="https://i.imgur.com/dTfjb6C.png" alt="lizard">
+    </div>
+
+    <div class="valinta" id="v">
+        <img src="https://i.imgur.com/7yli0un.png" alt="spock">
+    </div>
+</div>
+<div class="footer">
+<p id="sitaatti">Scissors cut Paper,
+    <br> Paper covers Rock,
+    <br>Rock crushes Lizard,
+    <br>Lizard poisons Spock,
+    <br>Spock smashes Scissors,
+    <br>Scissors decapitate Lizard,
+    <br>Lizard eats Paper,
+    <br>Paper disproves Spock,
+    <br>Spock vaporises Rock,
+    <br>Rock crushes Scissors.</p>    
+</div>
+
+<form action="asdasdasds">
+    <label for="pname">Player Name:</label><br>
+    <input type="text" id="pname" name="pname" value="AAA" maxlength="3"><br>
+
+
+    <label for="pscore">Player Score:</label><br>
+    <input type="text" id="pscore" name="pscore" maxlength="3" value=""><br>
+
+
+    <label for="hscore">Hal Score:</label><br>
+    <input type="number" id="hscore" name="hscore" maxlength="3" readonly ><br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+
+
+</html>
